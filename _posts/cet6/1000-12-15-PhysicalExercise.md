@@ -8,7 +8,7 @@ tags: [cet6-phrase]     # TAG names should always be lowercase
 Physical exercise is good for the body and the mind
 
 <audio id="audio" controls preload="auto">
-      <source id="mp3" src="/assets/audio/testaudio.mp3">
+      <source id="mp3" src="/assets/audio/physical.mp3">
 </audio>
 
 > 体育锻炼有益身心健康。
