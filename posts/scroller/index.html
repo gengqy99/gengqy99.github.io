@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="theme" content="Chirpy v2.6.2"><meta name="generator" content="Jekyll v4.1.1" /><meta property="og:title" content="平滑滚动动画（JS原生代码）" /><meta name="author" content="qyex" /><meta property="og:locale" content="en_US" /><meta name="description" content="实现效果如下" /><meta property="og:description" content="实现效果如下" /><link rel="canonical" href="https://gengqy99.github.io/posts/scroller/" /><meta property="og:url" content="https://gengqy99.github.io/posts/scroller/" /><meta property="og:site_name" content="Chirpy" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-11-24T12:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="平滑滚动动画（JS原生代码）" /><meta name="twitter:site" content="@twitter_username" /><meta name="twitter:creator" content="@qyex" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"author":{"@type":"Person","name":"qyex"},"datePublished":"2020-11-24T12:00:00+08:00","description":"实现效果如下","url":"https://gengqy99.github.io/posts/scroller/","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://gengqy99.github.io/posts/scroller/"},"headline":"平滑滚动动画（JS原生代码）","dateModified":"2020-11-24T12:00:00+08:00","@context":"https://schema.org"}</script><title>平滑滚动动画（JS原生代码） | Chirpy</title><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="icon" href="/assets/img/favicons/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon.png"><link rel="apple-touch-icon" href="/assets/img/favicons/apple-icon-precomposed.png"><link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicons/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicons/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicons/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicons/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicons/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicons/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicons/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicons/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicons/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicons/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/manifest.json"><meta name='msapplication-config' content='/assets/img/favicons/browserconfig.xml'><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/assets/img/favicons/ms-icon-144x144.png"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" href="/assets/css/post.css" as="style"><link rel="stylesheet" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/lib/bootstrap-toc.min.css"><link rel="stylesheet" href="/assets/css/lib/bootstrap-toc.min.css" /> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script async src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.15.0,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script async src="/assets/js/post.min.js"></script> <script defer src="/app.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/sample/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="profile-text mt-3"><div class="site-title"> <a href="/">Chirpy</a></div><div class="site-subtitle font-italic">A text-focused Jekyll theme.</div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/github_username" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['example','doamin.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>平滑滚动动画（JS原生代码）</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>平滑滚动动画（JS原生代码）</h1><div class="post-meta text-muted d-flex flex-column"><div> Posted <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Tue, Nov 24, 2020, 12:00 PM +0800" > Nov 24, 2020 <i class="unloaded">2020-11-24T12:00:00+08:00</i> </span> by <span class="author"> qyex </span></div></div><div class="post-content"><h2 id="实现效果如下">实现效果如下</h2><p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/img/scroller/scroll_smooth.gif" alt="eg_scroller" width="360" class="normal" /></p><h2 id="大体思路">大体思路</h2><ol><li><p>设置一个高度为容器视图两倍的内容区，并给容器设置样式<code class="language-plaintext highlighter-rouge">overflow: hidden;</code></p><li><p>获取当前轮次动画的初始数据，并通过设置document.scrollTop进行滚动</p><li><p>设置单次滚动的终止条件，我的终止条件是scrollTop达到最大值（<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTop">scrollTop</a>是有最大值的）</p><li><p>设计上述终止条件后要进行的操作逻辑，达到平滑过渡到下次的目的：</p><ol><li><p>把上方当前不可视的那一半，换成和下方当前可视的这一半一样的内容，下半部分保持不变</p><li><p>修改scrollTop为0，使内容区返回到未滚动时的初始位置，以便进行下一次滚动动画</p><li><p>终止条件的处理操作执行完，继续下一轮滚动至达到终止条件，并重复</p></ol></ol><h2 id="涉及到的细节">涉及到的细节</h2><h3 id="每次放入内容区的数据应该是怎样的">每次放入内容区的数据应该是怎样的？</h3><p>把照上述动画设计思路，用图形表示出来：</p><ol><li><p>第一轮滚动动画<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/img/scroller/scroll_state_1.png" alt="state_1" width="600" class="normal" /></p><li><p>第二轮滚动动画<br /> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7 " data-src="/assets/img/scroller/scroll_state_2.png" alt="state_2" width="600" class="normal" /><br />   .<br />   .<br />   .<br /> 后面也是一样的</p></ol><h3 id="结论">结论</h3><p>观察每一轮的第一帧时内容区的数据的状态，发现每次需要的数据有这样的规律：</p><p>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</p><p>[5, 6, 7, 8, 9, 10, 11, 12, 13, 14]</p><p> .<br />  .<br />  .</p><p>[5n, 5n+1, 5n+2, 5n+3, 5n+4, 5n+5, 5n+6, 5n+7, 5n+8, 5n+9]</p><p>其中<code class="language-plaintext highlighter-rouge">n</code>代表轮次，<code class="language-plaintext highlighter-rouge">5</code>是容器可视区能看见的数据个数。</p><h2 id="上代码">上代码</h2><h3 id="html部分">html部分</h3><div class="language-html highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/static/js/lib/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"scrollView"</span> <span class="na">style=</span><span class="s">"height: 150px;background: #CCE0FA;overflow: hidden"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"scrollInner"</span>
+         <span class="na">style=</span><span class="s">"height: 200%;display: flex;flex-direction: column;justify-content: space-around"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/static/js/下面贴出的js.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></table></code></div></div><h3 id="js部分">js部分</h3><div class="language-javascript highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+</pre><td class="rouge-code"><pre><span class="kd">var</span> <span class="nx">data_cache</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="c1">// 用于存储下次动画需要的数据</span>
+<span class="kd">var</span> <span class="nx">needUpdate</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// 是否需要更新数据</span>
+<span class="kd">var</span> <span class="nx">scrollView</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">scrollView</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 滚动视窗</span>
+<span class="kd">var</span> <span class="nx">scrollInner</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">scrollInner</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 内容区</span>
+<span class="kd">var</span> <span class="nx">pageSize</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// 滚动窗口内可以看见的数据个数</span>
+<span class="kd">var</span> <span class="nx">currentPage</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 请求第几轮动画的数据</span>
+<span class="kd">var</span> <span class="nx">finalViewInnerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span> <span class="c1">// 每一轮的最后一个画面需要的HTML（最后一个画面就是滚动到顶）</span>
+
+<span class="cm">/**
+ *
+ * @param currentPage
+ * @param pageSize
+ */</span>
+<span class="kd">function</span> <span class="nx">updateToCache</span><span class="p">(</span><span class="nx">currentPage</span><span class="p">,</span> <span class="nx">pageSize</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://easy-mock.com/mock/5fbe932b0295b12de9e9a592/get_scroll</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">get</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">currentPage</span><span class="p">:</span> <span class="nx">currentPage</span><span class="p">,</span>
+            <span class="na">pageSize</span><span class="p">:</span> <span class="nx">pageSize</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="na">dataType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">data_cache</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">startScroll</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">needUpdate</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 第一次没数据时、以及后续每轮需要新数据时执行这些语句</span>
+        <span class="nx">updateToCache</span><span class="p">(</span><span class="nx">currentPage</span><span class="p">,</span> <span class="nx">pageSize</span><span class="p">);</span>
+        <span class="nx">needUpdate</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">data_cache</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 已经存在新缓存，更新动画需要的数据</span>
+            <span class="nx">innerHTML</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data_cache</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">innerHTML</span> <span class="o">+=</span> <span class="dl">'</span><span class="s1">&lt;div&gt;</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data_cache</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;/div&gt;</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="nx">innerHTML</span><span class="p">;</span>
+            <span class="p">})();</span>
+            <span class="nx">scrollInner</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">innerHTML</span><span class="p">;</span>
+            <span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollTop</span><span class="o">++</span><span class="p">;</span>
+            <span class="nx">finalViewInnerHTML</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data_cache</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">innerHTML</span> <span class="o">+=</span> <span class="dl">'</span><span class="s1">&lt;div&gt;</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data_cache</span><span class="p">[</span><span class="nx">i</span> <span class="o">%</span> <span class="nx">pageSize</span> <span class="o">+</span> <span class="nx">pageSize</span><span class="p">].</span><span class="nx">value</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;/div&gt;</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">return</span> <span class="nx">innerHTML</span><span class="p">;</span>
+            <span class="p">})();</span>
+            <span class="nx">data_cache</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="c1">// 清空缓存</span>
+            <span class="nx">needUpdate</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// 需要更新新的数据</span>
+            <span class="nx">currentPage</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// waiting for response</span>
+            <span class="c1">// 可以加入一些交互动画</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">waiting for response</span><span class="dl">'</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollHeight</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">&lt;=</span> <span class="mf">1.5</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 即将滚动到顶</span>
+        <span class="nx">scrollInner</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">finalViewInnerHTML</span><span class="p">;</span>
+        <span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollTop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">scrollHeight:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">scrollTop:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollTop</span><span class="p">);</span>
+        <span class="nx">scrollView</span><span class="p">.</span><span class="nx">scrollTop</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">},</span> <span class="mi">50</span><span class="p">)</span>
+</pre></table></code></div></div><h3 id="后端接口easy-mock">后端接口（Easy Mock）</h3><div class="language-javascript highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="p">{</span>
+    <span class="nl">success</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">data</span><span class="p">:</span> <span class="kd">function</span> <span class="p">({</span><span class="nx">_req</span><span class="p">})</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="p">{</span><span class="na">query</span><span class="p">:</span> <span class="p">{</span><span class="nx">currentPage</span><span class="p">,</span> <span class="nx">pageSize</span><span class="p">}}</span> <span class="o">=</span> <span class="nx">_req</span><span class="p">;</span>
+        <span class="kd">const</span> <span class="nx">dataSet</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="c1">// 初始化dataSet的值</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">dataSet</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="na">index</span><span class="p">:</span> <span class="nx">i</span><span class="p">,</span>
+                <span class="na">value</span><span class="p">:</span> <span class="s2">`第</span><span class="p">${</span><span class="nx">i</span><span class="p">}</span><span class="s2">条数据`</span><span class="p">,</span>
+            <span class="p">};</span>
+        <span class="p">}</span>
+        <span class="kd">const</span> <span class="nx">scrollData</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">pageSize</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">scrollData</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dataSet</span><span class="p">[(</span><span class="nx">currentPage</span> <span class="o">*</span> <span class="nx">pageSize</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span> <span class="o">%</span> <span class="nx">dataSet</span><span class="p">.</span><span class="nx">length</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">scrollData</span><span class="p">;</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></table></code></div></div></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/js/'>JS</a>, <a href='/categories/component/'>Component</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/js/" class="post-tag no-text-decoration" >js</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=平滑滚动动画（JS原生代码） - Chirpy&url=https://gengqy99.github.io/posts/scroller/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=平滑滚动动画（JS原生代码） - Chirpy&u=https://gengqy99.github.io/posts/scroller/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=平滑滚动动画（JS原生代码） - Chirpy&url=https://gengqy99.github.io/posts/scroller/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/RollerCoaster/">CET6：roller coaster</a><li><a href="/posts/TackleTheBlaze/">CET6：tackle the blaze</a><li><a href="/posts/NumerousFormsOf/">CET6：numerous forms of</a><li><a href="/posts/DisciplinaryActions/">CET6：disciplinary actions</a><li><a href="/posts/Whole&Part/">CET6：整体&部分</a></ul></div><div id="access-tags"> <span>Trending Tags</span><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/js/">js</a> <a class="post-tag" href="/tags/cet6-phrase/">cet6 phrase</a> <a class="post-tag" href="/tags/cet6-compare-and-understand/">cet6 compare and understand</a> <a class="post-tag" href="/tags/pre-parse/">pre parse</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/jsobject/"><div class="card-body"> <span class="timeago small" > Nov 9, 2020 <i class="unloaded">2020-11-09T18:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>JS：对象</h3><div class="text-muted small"><p> 在js当中，对象就是用{}括起来的，无序的键值对。它表示的是一个具体的实例。在js中，定义对象通常指的是创建一个Object的实例对象。创建特定的实例对象需要用到构造函数。 定义对象的方式 字面量定义（最常用） const obj = {}; // 定义了一个对象，没有任何属性和方法 上述obj不能被称作空对象，null更适合被...</p></div></div></a></div><div class="card"> <a href="/posts/constructor/"><div class="card-body"> <span class="timeago small" > Nov 9, 2020 <i class="unloaded">2020-11-09T20:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>JS：构造函数</h3><div class="text-muted small"><p> 构造函数的定义 构造函数也是函数，使用大驼峰命名（不规范的命名并不会引发错误，但不建议）。来看一个简单的构造函数的例子： function Person(name, age) { console.log(this); this.eat = function () { console.log('人会吃饭'); } console.log(th...</p></div></div></a></div><div class="card"> <a href="/posts/prototype/"><div class="card-body"> <span class="timeago small" > Nov 12, 2020 <i class="unloaded">2020-11-12T16:00:00+08:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>JS：原型对象</h3><div class="text-muted small"><p> 任何的函数对象在定义的时候都会伴随着一个原型对象prototype出现，原型对象 默认 是Object的实例对象，含有至少 constructor 和 __proto__ 这两个属性。 function Person(name, age){ this.name = name; this.age = age; } console.dir(Person); /* 打印结果如下：...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/prototype/" class="btn btn-outline-primary"><p>JS：原型对象</p></a> <a href="/posts/prototype-application/" class="btn btn-outline-primary"><p>JS：原型对象的应用</p></a></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const imgs = document.querySelectorAll('#post-wrapper img'); const observer = lozad(imgs); observer.observe(); </script><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2021 <a href="https://twitter.com/username">your_full_name</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy/" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4><a class="post-tag" href="/tags/js/">js</a> <a class="post-tag" href="/tags/cet6-phrase/">cet6 phrase</a> <a class="post-tag" href="/tags/cet6-compare-and-understand/">cet6 compare and understand</a> <a class="post-tag" href="/tags/pre-parse/">pre parse</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://gengqy99.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script> <script async src="https://www.googletagmanager.com/gtag/js?id="></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ''); </script>
