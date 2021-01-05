@@ -8,7 +8,7 @@ tags: [cet6-phrase]     # TAG names should always be lowercase
 The teacher is taking disciplinary actions against the naughty boy.
 
 <audio id="audio" controls preload="auto">
-      <source id="mp3" src="/assets/audio/null.mp3">
+      <source id="mp3" src="/assets/audio/disciplinary-actions.mp3">
 </audio>
 
 > 老师给了这个淘气的男孩纪律处分
